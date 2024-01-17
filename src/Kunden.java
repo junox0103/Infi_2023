@@ -44,4 +44,16 @@ public class Kunden {
         }
 
     }
+    public void kupdate(int id,String Name,String Email) throws Exception
+    {
+        Statement statement=connection.createStatement();
+        statement.execute("UPDATE kunden set name='"+Name+"',email='"+Email+"'where idk="+id+"");
+
+
+    }
+    public void kdelete(int id)throws Exception
+    {
+        Statement statement= connection.createStatement();
+        statement.execute("Delete from kunden where idk="+id+"");
+    }
 }

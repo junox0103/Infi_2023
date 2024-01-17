@@ -26,12 +26,26 @@ public class Bestellungen {
         }
         ResultSet resultset2 = statement.executeQuery("SELECT ida FROM Artikel WHERE bezeichnung='" + bestllenartikel + "'");
         int ida = 0;
+
         while (resultset2.next()) {
             ida = resultset2.getInt("ida");
 
         }
-        statement.execute("insert into bestellungen (idk,ida,anzahl)values (' " + idk + " ','"+ida+"','"+menge+"')");
-
-
+        ResultSet ressi=statement.executeQuery("SELECT menge from Lager where ida="+ida+"");
+        int bm=0;
+        while (ressi.next()) {
+             bm = ressi.getInt("menge");
+        }
+        bm=bm-menge;
+        System.out.println(bm);
+        if (bm>menge)
+        {
+            statement.execute("update lager set menge="+bm+" where ida="+ida+"");
+            statement.execute("insert into bestellungen (idk,ida,anzahl)values (' " + idk + " ','"+ida+"','"+menge+"')");
+            System.out.println("Erfolgreich bestellt");
+        }
+        else {
+            System.out.println("soviel ist leider nicht mehr im Lager");
+        }
     }
 }
