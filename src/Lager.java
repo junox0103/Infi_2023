@@ -4,7 +4,9 @@ import java.sql.Statement;
 public class Lager {
     private Connection connection;
 
-    public Lager(Connection con){this.connection=con;}
+    public Lager(Connection con) {
+        this.connection = con;
+    }
 
     public void createtable() throws Exception {
         Statement statement = connection.createStatement();
