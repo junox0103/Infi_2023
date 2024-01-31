@@ -12,23 +12,21 @@ public class Kunden {
         statement.execute("create table if not exists Kunden (idk int AUTO_INCREMENT PRIMARY KEY,name text,email text)");
     }
 
-
-
     public void anlegen(String kundenname, String email) throws Exception
     {
-        Statement statement = connection.createStatement();
-
-        statement.execute("INSERT INTO Kunden (name, email) VALUES ('" + kundenname + "', '" + email + "')");
-
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO Kunden (name, email) VALUES (?,?)");
+        statement.setString(1,kundenname);
+        statement.setString(2,email);
+        statement.executeUpdate();
 
 
     }
-
-
     public void bestellungsabfrage(int kundenname) throws Exception
     {
         Statement statement=connection.createStatement();
-        ResultSet resultset = statement.executeQuery("SELECT ida,anzahl FROM Bestellungen WHERE idk='" + kundenname + "'");
+        PreparedStatement stm = connection.prepareStatement("SELECT ida,anzahl FROM Bestellungen WHERE idk=?");
+        stm.setInt(1,kundenname);
+        ResultSet resultset= stm.executeQuery();
         int ida = 0;
         int m=0;
         while (resultset.next()) {
@@ -46,14 +44,17 @@ public class Kunden {
     }
     public void kupdate(int id,String Name,String Email) throws Exception
     {
-        Statement statement=connection.createStatement();
-        statement.execute("UPDATE kunden set name='"+Name+"',email='"+Email+"'where idk="+id+"");
-
+        PreparedStatement statement=connection.prepareStatement("UPDATE kunden set name=? , email=? where idk=?");
+        statement.setString(1,Name);
+        statement.setString(2,Email);
+        statement.setInt(3,id);
+        statement.executeUpdate();
 
     }
     public void kdelete(int id)throws Exception
     {
-        Statement statement= connection.createStatement();
-        statement.execute("Delete from kunden where idk="+id+"");
+        PreparedStatement statement= connection.prepareStatement("Delete from kunden where idk=?");
+        statement.setInt(1,id);
+        statement.executeUpdate();
     }
 }

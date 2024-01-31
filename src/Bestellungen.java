@@ -18,15 +18,17 @@ public class Bestellungen {
 
 
     public void bestellen(String bestller, String bestllenartikel, int menge) throws Exception {
-        Statement statement = connection.createStatement();
-
-        ResultSet resultset = statement.executeQuery("SELECT idk FROM Kunden WHERE name='" + bestller + "'");
+        PreparedStatement statement = connection.prepareStatement("SELECT idk FROM Kunden WHERE name=?");
+        statement.setString(1,bestller);
+        ResultSet resultset = statement.executeQuery();
         int idk = 0;
         while (resultset.next()) {
             idk = resultset.getInt("idk");
 
         }
-        ResultSet resultset2 = statement.executeQuery("SELECT ida FROM Artikel WHERE bezeichnung='" + bestllenartikel + "'");
+        PreparedStatement smt2= connection.prepareStatement("SELECT ida FROM Artikel WHERE bezeichnung=?");
+        smt2.setString(1,bestllenartikel);
+        ResultSet resultset2 = smt2.executeQuery();
         int ida = 0;
 
         while (resultset2.next()) {

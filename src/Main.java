@@ -79,7 +79,7 @@ public class Main {
                     int menge = scanner.nextInt();
                     bestellungen.bestellen(bestller, bestllenartikel, menge);
                 } else if (fall2 == 3) {
-                    System.out.println("Welcher Artikel wird Ugedatet?");
+                    System.out.println("Welcher Artikel wird Ugedatet? (id)");
                     int artikelid = scanner.nextInt();
                     System.out.println("Der Neue Name?");
                     String artikelbezeichnung = scanner.next();
@@ -87,7 +87,7 @@ public class Main {
                     float artikelpreis = scanner.nextFloat();
                     artikel.aupdate(artikelid, artikelbezeichnung, artikelpreis);
                 } else if (fall2 == 4) {
-                    System.out.println("Welcher Artikel wird gehadet?");
+                    System.out.println("Welcher Artikel wird gehadet?(id)");
                     int artikelid = scanner.nextInt();
                     artikel.adelete(artikelid);
                 }

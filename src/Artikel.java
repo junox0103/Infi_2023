@@ -1,9 +1,6 @@
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Artikel {
     private Connection connection;
@@ -15,8 +12,6 @@ public class Artikel {
         Statement statement = connection.createStatement();
         statement.execute("create table if not exists Artikel (ida int AUTO_INCREMENT PRIMARY KEY, bezeichnung text,preis float);");
     }
-
-
     public void anlegen(String artikelbezeichung, Float preis) throws Exception
     {
         Statement statement = connection.createStatement();
@@ -29,13 +24,17 @@ public class Artikel {
             if (test.equals(artikelbezeichung))
             {
                 vorhanden=true;
-
             }
         }
         if (vorhanden==false)
         {
-            statement.execute("INSERT INTO Artikel (bezeichnung, preis) VALUES ('" + artikelbezeichung + "', '" + preis + "')");
-            ResultSet resultset2 = statement.executeQuery("SELECT ida FROM Artikel WHERE bezeichnung='" + artikelbezeichung + "'");
+            PreparedStatement stm= connection.prepareStatement("INSERT INTO Artikel (bezeichnung, preis) VALUES (?,?)");
+            stm.setString(1,artikelbezeichung);
+            stm.setDouble(2,preis);
+            stm.executeUpdate();
+            PreparedStatement stm2=connection.prepareStatement("SELECT ida FROM Artikel WHERE bezeichnung=?");
+            stm2.setString(1,artikelbezeichung);
+            ResultSet resultset2 = stm2.executeQuery();
             int lol = 0;
             while (resultset2.next()) {
               lol = resultset2.getInt("ida");
@@ -45,7 +44,9 @@ public class Artikel {
         } else
         {
             System.out.println("Artikel bereits da udn wurde aufgestockt");
-            ResultSet resultset3 = statement.executeQuery("SELECT ida FROM Artikel WHERE bezeichnung='" + artikelbezeichung + "'");
+            PreparedStatement stm2=connection.prepareStatement("SELECT ida FROM Artikel WHERE bezeichnung=?");
+            stm2.setString(1,artikelbezeichung);
+            ResultSet resultset3 = stm2.executeQuery();
             int ida = 0;
             while (resultset3.next()) {
                 ida = resultset3.getInt("ida");
@@ -62,16 +63,18 @@ public class Artikel {
 
 
     }
-
     public void aupdate(int artikelid, String artikelbezeichnung, float artikelpreis) throws Exception
     {
-        Statement statement=connection.createStatement();
-        statement.execute("UPDATE artikel set bezeichnung='"+artikelbezeichnung+"',preis="+artikelpreis+" where ida="+artikelid+"");
+        PreparedStatement statement=connection.prepareStatement("UPDATE artikel set bezeichnung=?,preis=? where ida=?");
+        statement.setString(1,artikelbezeichnung);
+        statement.setDouble(2,artikelpreis);
+        statement.setInt(3,artikelid);
+        statement.executeUpdate();
     }
-
     public void adelete(int artikelid) throws Exception
     {
-        Statement statement= connection.createStatement();
-        statement.execute("Delete from Artikel where ida="+artikelid+"");
+        PreparedStatement statment= connection.prepareStatement("Delete from Artikel where ida=?");
+        statment.setInt(1,artikelid);
+        statment.executeUpdate();
     }
 }
