@@ -1,8 +1,21 @@
+package src;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import javax.sound.midi.Soundbank;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Kunden {
     private Connection connection;
+    JSONObject jsonObject = new JSONObject();
+    JSONArray kunden=new JSONArray();
+
 
     public Kunden(Connection connection) {
         this.connection = connection;
@@ -18,6 +31,31 @@ public class Kunden {
         statement.setString(1,kundenname);
         statement.setString(2,email);
         statement.executeUpdate();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Name", kundenname);
+        jsonObject.put("Email", email);
+        File file = new File("Kunden.json");
+        JSONArray kunden = new JSONArray();
+        if (file.exists() && file.length() != 0) {
+            JSONParser parser = new JSONParser();
+            try (FileReader reader = new FileReader(file)) {
+                kunden = (JSONArray) parser.parse(reader);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        kunden.add(jsonObject);
+
+
+        FileWriter writer = new FileWriter("Kunden.json");
+        writer.write(kunden.toJSONString());
+        writer.flush();
+
+
+
+
 
 
     }

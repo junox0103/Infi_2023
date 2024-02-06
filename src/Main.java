@@ -1,6 +1,10 @@
+package src;
+
+import org.json.simple.JSONObject;
+
 import java.awt.*;
+import java.io.FileWriter;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -22,6 +26,8 @@ public class Main {
         bestellungen.createtable();
         lager.createtable();
         boolean wiederholen = true;
+
+
         while (wiederholen == true) {
             System.out.println("------------------------");
             System.out.println("Was möchten Sie machen?");
@@ -37,6 +43,8 @@ public class Main {
                 System.out.println("1.Neuen Kunden anlagen");
                 System.out.println("2.Kunden Updaten");
                 System.out.println("3.Kunden destroyer");
+                System.out.println("4.Kunden anzeigen");
+
                 int fall2 = scanner.nextInt();
                 if (fall2 == 1) {
                     System.out.println("Gerne! Name?");
@@ -56,6 +64,13 @@ public class Main {
                     System.out.println("Welcher Kunde wird gehadet?");
                     int kundenid = scanner.nextInt();
                     kunden.kdelete(kundenid);
+                } else if (fall2==4)
+                {
+                    System.out.println("Wie heist die File (mit datenname):");
+                    String filename=scanner.next();
+                    ReaderFile readerFile=new ReaderFile(filename);
+                    readerFile.lesen();
+
                 }
             } else if (fall == 2) {
                 System.out.println("Was soll mit dem Artikel passieren?");
@@ -104,5 +119,6 @@ public class Main {
             }
         }
         dbConnection.closeConnection();
+
     }
 }
