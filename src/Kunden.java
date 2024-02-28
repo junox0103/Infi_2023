@@ -31,7 +31,6 @@ public class Kunden {
         statement.setString(1,kundenname);
         statement.setString(2,email);
         statement.executeUpdate();
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Name", kundenname);
         jsonObject.put("Email", email);
@@ -45,12 +44,10 @@ public class Kunden {
                 e.printStackTrace();
             }
         }
-
         kunden.add(jsonObject);
-
-
         FileWriter writer = new FileWriter("Kunden.json");
         writer.write(kunden.toJSONString());
+
         writer.flush();
 
 
@@ -76,6 +73,24 @@ public class Kunden {
         while (resultset2.next()) {
             String ende = resultset2.getString("bezeichnung");
             System.out.println(""+ende+" , anzahl: "+m+"");
+
+        }
+
+
+    }
+    public void bestellungsabfragemj(int kundenname) throws Exception {
+        Statement statement = connection.createStatement();
+        PreparedStatement stm = connection.prepareStatement("SELECT Bestellungen.anzahl, Artikel.bezeichnung FROM Bestellungen LEFT JOIN Artikel ON Artikel.ida = Bestellungen.ida WHERE Bestellungen.idk = ?");
+        stm.setInt(1, kundenname);
+        ResultSet resultset = stm.executeQuery();
+        int anzahl = 0;
+        String bezeichnung="";
+
+
+        while (resultset.next()) {
+            bezeichnung = resultset.getString("Artikel.bezeichnung");
+            anzahl = resultset.getInt("anzahl");
+            System.out.println("" + bezeichnung + " , anzahl: " + anzahl + "");
 
         }
 

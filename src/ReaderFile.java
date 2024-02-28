@@ -24,8 +24,6 @@ public void lesen() throws IOException {
 
     while ((ch = fr.read()) != -1)
         System.out.print((char) ch);
-
-
     fr.close();
 }
 

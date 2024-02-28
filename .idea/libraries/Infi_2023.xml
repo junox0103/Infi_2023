@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Infi_2023">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/GeradeUngerademysql.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Kauf_Kunden_etc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -37,13 +37,17 @@ public class Main {
             System.out.println("3.Schwarzmarkt :)");
             System.out.println("4.Bestellungstracker");
             System.out.println("5.Exit");
+            System.out.println("6.File reader");
+            System.out.println("7.Bestellungstracker mit joint");
+            System.out.println("8.Lager Auskunft");
+            System.out.println("9.Lager Auskunft (inner)");
             int fall = scanner.nextInt();
             if (fall == 1) {
                 System.out.println("Was möchten sie im Bereich 'Kunden' machen ?");
                 System.out.println("1.Neuen Kunden anlagen");
                 System.out.println("2.Kunden Updaten");
                 System.out.println("3.Kunden destroyer");
-                System.out.println("4.Kunden anzeigen");
+
 
                 int fall2 = scanner.nextInt();
                 if (fall2 == 1) {
@@ -64,14 +68,8 @@ public class Main {
                     System.out.println("Welcher Kunde wird gehadet?");
                     int kundenid = scanner.nextInt();
                     kunden.kdelete(kundenid);
-                } else if (fall2==4)
-                {
-                    System.out.println("Wie heist die File (mit datenname):");
-                    String filename=scanner.next();
-                    ReaderFile readerFile=new ReaderFile(filename);
-                    readerFile.lesen();
-
                 }
+
             } else if (fall == 2) {
                 System.out.println("Was soll mit dem Artikel passieren?");
                 System.out.println("1.Artikel registrieren");
@@ -116,7 +114,33 @@ public class Main {
                 kunden.bestellungsabfrage(kundenid);
             } else if (fall == 5) {
                 wiederholen = false;
+            } else if (fall==6)
+            {
+                System.out.println("Wie heist die File (mit datenname):");
+                String filename=scanner.next();
+                ReaderFile readerFile=new ReaderFile(filename);
+                readerFile.lesen();
+
+
+            } else if (fall==7) {
+                System.out.println("Wer wird getrackt");
+                int kid= scanner.nextInt();
+                kunden.bestellungsabfragemj(kid);
+
+            } else if (fall==8)
+            {
+                System.out.println("Von welchem Artikel wollen sie den Lagerbestand haben? (id)");
+                int aid= scanner.nextInt();
+                lager.lagerbestand(aid);
+
+            }else if (fall==9)
+            {
+                System.out.println("Von welchem Artikel wollen sie den Lagerbestand haben? (id)");
+                int aid= scanner.nextInt();
+                lager.lagerbestandinner(aid);
+
             }
+
         }
         dbConnection.closeConnection();
 
