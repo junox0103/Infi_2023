@@ -110,4 +110,19 @@ public class Kunden {
         statement.setInt(1,id);
         statement.executeUpdate();
     }
+    public void kundennamesuche(int id)throws Exception{
+        Statement statement=connection.createStatement();
+        boolean hasResults = statement.execute("CALL erstens(" + id + ")");
+
+            ResultSet rs = statement.getResultSet();
+            while (rs.next()) {
+                String result = rs.getString("var_output");
+                System.out.println(result);
+            }
+            rs.close();
+
+
+    }
+
+
 }

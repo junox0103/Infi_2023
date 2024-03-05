@@ -41,6 +41,8 @@ public class Main {
             System.out.println("7.Bestellungstracker mit joint");
             System.out.println("8.Lager Auskunft");
             System.out.println("9.Lager Auskunft (inner)");
+            System.out.println("10. Kunden nameausgabe mithilfe id");
+
             int fall = scanner.nextInt();
             if (fall == 1) {
                 System.out.println("Was möchten sie im Bereich 'Kunden' machen ?");
@@ -123,7 +125,7 @@ public class Main {
 
 
             } else if (fall==7) {
-                System.out.println("Wer wird getrackt");
+                System.out.println("Wer wird getrackt (id)");
                 int kid= scanner.nextInt();
                 kunden.bestellungsabfragemj(kid);
 
@@ -139,6 +141,10 @@ public class Main {
                 int aid= scanner.nextInt();
                 lager.lagerbestandinner(aid);
 
+            } else if (fall == 10) {
+                System.out.println("Wie lautet die Id von der der Name gesucht ist");
+                int id= scanner.nextInt();
+                kunden.kundennamesuche(id);
             }
 
         }
